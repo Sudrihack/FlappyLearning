@@ -27,6 +27,10 @@ var game;
 var FPS = 60;
 var maxScore=0;
 
+var historyLog = [];
+
+
+
 var images = {};
 
 var speed = function(fps){
@@ -155,6 +159,7 @@ Game.prototype.start = function(){
 }
 
 Game.prototype.update = function(){
+
 	this.backgroundx += this.backgroundSpeed;
 	var nextHoll = 0;
 	if(this.birds.length > 0){
@@ -183,9 +188,11 @@ Game.prototype.update = function(){
 			if(this.birds[i].isDead(this.height, this.pipes)){
 				this.birds[i].alive = false;
 				this.alives--;
-				//console.log(this.alives);
 				Neuvol.networkScore(this.gen[i], this.score);
 				if(this.isItEnd()){
+					historyLog.push({generation: this.generation, maxScore: this.maxScore })
+					console.log(historyLog);
+
 					this.start();
 				}
 			}
@@ -278,6 +285,7 @@ Game.prototype.display = function(){
 }
 
 window.onload = function(){
+	// history = window.localStorage.getItem('history')
 	var sprites = {
 		bird:"./img/bird.png",
 		background:"./img/background.png",
