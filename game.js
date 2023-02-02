@@ -219,9 +219,9 @@ Game.prototype.update = function () {
 	var self = this;
 
 	if (this.score > seuilChampion) {
+		championListe = JSON.parse(window.localStorage.getItem('champions')) || [];
 		championListe.push(this.generation)
 		this.start();
-		console.log(championListe);
 		window.localStorage.setItem('champions', JSON.stringify(championListe))
 		window.location.reload()
 	}
@@ -287,8 +287,6 @@ Game.prototype.display = function () {
 }
 
 window.onload = function () {
-	championListe = JSON.parse(window.localStorage.getItem('champions')) || [];
-
 	if (window.localStorage.getItem('speedUp') == 'true') {
 		speed(0)
 	}
